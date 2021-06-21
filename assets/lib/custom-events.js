@@ -11,3 +11,23 @@ export function generateProductAddEvent(button, id) {
         }))
     });
 }
+
+/**
+ * Функция генерирует CustomEvent "ribbon-select" на событие 'click' по HTMl-элементу.
+ * @param {HTMLElement} item
+ * @param {string} id 
+ * @param {boolean} bubbl всплытие.
+ * @param {Function} func дополнительное действие на событии
+ */
+export function generateSelectEvent(item, id, bubbl, func) {
+    item.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (func) { func() };
+        item.classList.add('ribbon__item_active');
+        item.dispatchEvent(new CustomEvent('ribbon-select', {
+            detail: id,
+            bubbles: bubbl,
+        }))
+
+    })
+}
