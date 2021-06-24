@@ -31,3 +31,16 @@ export function generateSelectEvent(item, id, bubbl, func) {
 
     })
 }
+
+/**
+ * Функция генерирует CustomEvent 'slider-change',
+ * которое содержит новое значение HTMl-элемента.
+ * @param {HTMLElement} slider 
+ * @param {number} newSliderValue 
+ */
+export function generateSliderChangeEvent(slider, newSliderValue) {
+    slider.dispatchEvent(new CustomEvent('slider-change', {
+        detail: newSliderValue,
+        bubbles: true,
+    }))
+}
