@@ -38,7 +38,26 @@ export default class CartIcon {
     window.addEventListener('resize', () => this.updatePosition());
   }
 
+  isHidden = (elem) => !elem.offsetWidth && !elem.offsetHeight;
+
   updatePosition() {
     // ваш код ...
+    let cartIcon = document.querySelector('.cart-icon');
+    let isCartAtTheTopBorder = cartIcon.getBoundingClientRect().top < 0;
+    let leftIndent = `${Math.min(
+      document.querySelector('.container').getBoundingClientRect().right + 20,
+      document.documentElement.clientWidth - this.elem.offsetWidth - 10
+    )}px`;
+
+    if (document.body.getBoundingClientRect().top === 0) {
+      cartIcon.style = '';
+    }
+
+    if (!this.isHidden(cartIcon) && isCartAtTheTopBorder) {
+      cartIcon.style.position = 'fixed';
+      cartIcon.style.top = '50px';
+      cartIcon.style.left = leftIndent;
+      cartIcon.style.zIndex = '1000';
+    }
   }
 }
