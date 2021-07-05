@@ -44,22 +44,20 @@ export default class CartIcon {
     // ваш код ...
     if (!this.isHidden(this.elem)) {
       let cartIcon = document.querySelector('.cart-icon');
-      let isCartAtTheTopBorder = cartIcon.getBoundingClientRect().top < 0;
       let leftIndent = `${Math.min(
         document.querySelector('.container').getBoundingClientRect().right + 20,
         document.documentElement.clientWidth - this.elem.offsetWidth - 10
       )}px`;
-  
-      if (document.body.getBoundingClientRect().top === 0) {
+
+      if (document.body.getBoundingClientRect().top === 0 || document.documentElement.clientWidth <= 767) {
         cartIcon.style = '';
+        return;
       }
-  
-      if (isCartAtTheTopBorder) {
-        cartIcon.style.position = 'fixed';
-        cartIcon.style.top = '50px';
-        cartIcon.style.left = leftIndent;
-        cartIcon.style.zIndex = '1000';
-      }
+
+      cartIcon.style.position = 'fixed';
+      cartIcon.style.top = '50px';
+      cartIcon.style.left = leftIndent;
+      cartIcon.style.zIndex = '1000';
     }
   }
 
