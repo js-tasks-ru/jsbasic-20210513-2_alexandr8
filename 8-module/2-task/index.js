@@ -20,7 +20,6 @@ export default class ProductGrid {
   render() {
     this.elem = createElement('<div class="products-grid"></div>');
     this.elem.append(this.renderProductCards(this.products));
-    console.log(`ren`);
   }
 
   /**
@@ -31,7 +30,7 @@ export default class ProductGrid {
    */
   renderProductCards(products) {
     let grid = createElement('<div class="products-grid__inner"></div>');
-    
+
     products.forEach(product => {
       grid.append(new ProductCard(product).elem);
     });
@@ -47,15 +46,14 @@ export default class ProductGrid {
   updateFilter(filters) {
     this.addFilters(filters);
     this.clearGrid();
-    document.querySelector('.products-grid')
-      .append(this.renderProductCards(this.filterProducts()));
+    this.elem.append(this.renderProductCards(this.filterProducts()));
   }
 
   /**
    * Метод очищает содерэимое корневого HTML-элемента.
    */
   clearGrid() {
-    document.querySelector('.products-grid').innerHTML = '';
+    this.elem.innerHTML = '';
   }
 
   /**
@@ -64,21 +62,21 @@ export default class ProductGrid {
    * @param {Object} filters 
    */
   addFilters(filters) {
-    for (let key in filters) {
-      if (key === 'noNuts') {
-        this.filters.nuts = filters[key];
-      }
-      if (key === 'vegeterianOnly') {
-        this.filters.vegeterian = filters[key];
-      }
-      if (key === 'maxSpiciness' && filters[key] <= 4) {
-        this.filters.spiciness = filters[key];
-      }
-      if (key === 'category') {
-        this.filters.category = filters[key];
-      }
-    }
-    
+    let
+      {
+        noNuts: nuts = this.filters.nuts,
+        vegeterianOnly: vegeterian = this.filters.vegeterian,
+        maxSpiciness: spiciness = this.filters.spiciness >= 0 ? this.filters.spiciness : 4,
+        category = this.filters.category
+      } = filters;
+
+    Object.assign(this.filters,
+      {
+        nuts,
+        vegeterian,
+        spiciness,
+        category,
+      })
   }
 
   /**
